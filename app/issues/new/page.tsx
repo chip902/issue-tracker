@@ -55,7 +55,7 @@ const NewIssuePage = () => {
 				<ErrorMessage>{errors.title?.message}</ErrorMessage>
 				<Controller name="description" control={control} render={({ field }) => <SimpleMDE placeholder="Describe the issue..." {...field} />} />
 				<ErrorMessage>{errors.description?.message}</ErrorMessage>
-				<Button>
+				<Button disabled={submitting}>
 					Submit New Issue
 					{submitting && <LoadingSpinner />}
 				</Button>
