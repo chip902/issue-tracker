@@ -4,7 +4,7 @@ import { Table } from "@radix-ui/themes";
 import prisma from "@/prisma/client";
 import IssueStatusBadge from "../components/IssueStatusBadge";
 import IssuesToolbar from "./IssuesToolbar";
-import Link from "next/link";
+import Link from "../components/Link";
 
 const IssuesPage = async () => {
 	const issues = await prisma.issue.findMany();
@@ -12,7 +12,7 @@ const IssuesPage = async () => {
 	return (
 		<div>
 			<IssuesToolbar />
-			<Table.Root className="" variant="surface">
+			<Table.Root variant="surface">
 				<Table.Header>
 					<Table.Row>
 						<Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
