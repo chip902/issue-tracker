@@ -1,18 +1,18 @@
 "use client";
-import { Button, Callout, TextField } from "@radix-ui/themes";
-import { useForm, Controller } from "react-hook-form";
-import dynamic from "next/dynamic";
-import axios from "axios";
-import "easymde/dist/easymde.min.css";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { IoWarningOutline } from "react-icons/io5";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { issueSchema } from "@/app/validationSchemas";
-import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import LoadingSpinner from "@/app/components/LoadingSpinner";
+import { issueSchema } from "@/app/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Issue } from "@prisma/client";
+import { Button, Callout, TextField } from "@radix-ui/themes";
+import axios from "axios";
+import "easymde/dist/easymde.min.css";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { IoWarningOutline } from "react-icons/io5";
+import { z } from "zod";
 
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), { ssr: false });
 
@@ -33,8 +33,10 @@ const NewIssuePage = ({ issue }: { issue?: Issue }) => {
 	const onSubmit = handleSubmit(async (data) => {
 		try {
 			isSubmitting(true);
-			await axios.post("/api/issues", data);
+			if (issue) await axios.patch("/api/issues/" + issue.id, data);
+			else await axios.post("/api/issues", data);
 			router.push("/issues");
+			router.refresh();
 		} catch (error) {
 			isSubmitting(false);
 			setError("An unexpected error occured");
@@ -63,8 +65,7 @@ const NewIssuePage = ({ issue }: { issue?: Issue }) => {
 				/>
 				<ErrorMessage>{errors.description?.message}</ErrorMessage>
 				<Button disabled={submitting}>
-					Submit New Issue
-					{submitting && <LoadingSpinner />}
+					{issue ? "Update Issue" : "Submit New Issue"} {submitting && <LoadingSpinner />}
 				</Button>
 			</form>
 		</div>
