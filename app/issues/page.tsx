@@ -3,6 +3,7 @@ import { Status } from "@prisma/client";
 import Pagination from "../components/Pagination";
 import IssuesToolbar from "./IssuesToolbar";
 import IssueTable, { IssueQuery } from "./IssueTable";
+import { Flex } from "@radix-ui/themes";
 
 interface IssuesPageProps {
 	searchParams: IssueQuery;
@@ -28,12 +29,11 @@ const IssuesPage = async ({ searchParams }: IssuesPageProps) => {
 	});
 
 	return (
-		<div>
+		<Flex direction="column" gap="3">
 			<IssuesToolbar />
 			<IssueTable searchParams={searchParams} issues={issues} />
-			<br />
 			<Pagination pageSize={pageSize} currentPage={page} itemCount={issueCount} />
-		</div>
+		</Flex>
 	);
 };
 
