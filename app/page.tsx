@@ -1,3 +1,5 @@
+import Pagination from "./components/Pagination";
+
 export default function Home() {
-	return <>Hello World</>;
+	return <Pagination pageSize={10} currentPage={10} itemCount={100} />;
 }
