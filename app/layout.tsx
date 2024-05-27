@@ -1,14 +1,12 @@
 import { Container, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import AuthProvider from "./auth/Provider";
 import "./globals.css";
 import NavBar from "./NavBar";
 import QueryClientProvider from "./QueryClientProvider";
 import "./theme-config.css";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+import InterFontComponent from "./InterFontComponent";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -18,7 +16,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
-			<body className={inter.variable}>
+			<body>
+				<InterFontComponent />
 				<QueryClientProvider>
 					<AuthProvider>
 						<Theme accentColor="iris" radius="large">
