@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import prisma from "@/prisma/client";
 import { Status } from "@prisma/client";
 import Pagination from "../components/Pagination";
@@ -10,7 +11,7 @@ interface IssuesPageProps {
 	searchParams: IssueQuery;
 }
 
-const IssuesPage = async ({ searchParams }: IssuesPageProps) => {
+const IssuesPageContent = async ({ searchParams }: IssuesPageProps) => {
 	const statuses = Object.values(Status);
 	const status = statuses.includes(searchParams.status as Status) ? (searchParams.status as Status) : undefined;
 	const where = { status };
@@ -35,6 +36,14 @@ const IssuesPage = async ({ searchParams }: IssuesPageProps) => {
 			<IssueTable searchParams={searchParams} issues={issues} />
 			<Pagination pageSize={pageSize} currentPage={page} itemCount={issueCount} />
 		</Flex>
+	);
+};
+
+const IssuesPage = (props: IssuesPageProps) => {
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<IssuesPageContent {...props} />
+		</Suspense>
 	);
 };
 
