@@ -1,5 +1,5 @@
 "use client";
-import { Container, Theme } from "@radix-ui/themes";
+import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 import AuthProvider from "./auth/Provider";
 import InterFontComponent from "./InterFontComponent";
 import NavBar from "./NavBar";
@@ -11,7 +11,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 			<InterFontComponent />
 			<QueryClientProvider>
 				<AuthProvider>
-					<Theme accentColor="iris" radius="large">
+					<Theme appearance="dark" accentColor="iris" radius="large">
 						<NavBar />
 						<main className="p-5">
 							<Container>{children}</Container>
